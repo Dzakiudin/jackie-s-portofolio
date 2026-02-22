@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Orbitron:wght@400;700;900&display=swap');
+
+.cyber-strategist {
+    --bg-color: #000000;
+    --text-color: #eaeaea;
+    --accent-cyan: #00ffff;
+    --accent-purple: #a020f0;
+    --grid-color: rgba(0, 255, 255, 0.05);
+    --skill-card-bg-color: #000000;
+    --project-card-bg-color: #0A0F1A;
+    --card-text-color: #a0aec0;
+    --card-grid-color: rgba(0, 255, 255, 0.04);
+    --hero-button-text-color: var(--accent-cyan);
+
+    background-image:
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(to right, var(--grid-color) 1px, transparent 1px);
+    background-size: 30px 30px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.light .cyber-strategist {
+    --bg-color: #f0f2f5;
+    --text-color: #1a1a1a;
+    --accent-cyan: #078a8a;
+    --accent-purple: #7b1aa3;
+    --grid-color: rgba(0, 0, 0, 0.05);
+    --skill-card-bg-color: #ffffff;
+    --project-card-bg-color: #ffffff;
+    --card-text-color: #4a5568;
+    --card-grid-color: rgba(0, 0, 0, 0.08);
+    --hero-button-text-color: #1a1a1a;
+}
+
+/* Animations from original file */
+@keyframes glow {
+
+    0%,
+    100% {
+        text-shadow: 0 0 5px var(--accent-cyan), 0 0 10px var(--accent-cyan), 0 0 15px var(--accent-cyan);
+    }
+
+    50% {
+        text-shadow: 0 0 10px var(--accent-purple), 0 0 20px var(--accent-purple), 0 0 30px var(--accent-purple);
+    }
+}
+
+html.light .cyber-strategist .neon-text {
+    text-shadow: 0 0 8px var(--accent-cyan);
+    animation: none;
+}
+
+html.light .cyber-strategist h2.neon-text span {
+    color: var(--text-color) !important;
+}
+
+@keyframes horizontal-light {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+.cyber-strategist .neon-text {
+    animation: glow 4s ease-in-out infinite;
+}
+
+.cyber-strategist .font-orbitron {
+    font-family: 'Orbitron', sans-serif;
+}
+
+.cyber-strategist .navbar-scrolled {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+html.light .cyber-strategist .navbar-scrolled {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Buttons */
+.cyber-strategist .hero-button,
+.cyber-strategist .secondary-button {
+    font-family: 'Orbitron', sans-serif;
+    position: relative;
+    background: transparent;
+    border: 2px solid var(--accent-cyan);
+    color: var(--hero-button-text-color);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+.cyber-strategist .hero-button {
+    padding: 1rem 2.5rem;
+    border-radius: 0.75rem;
+    font-size: 1.25rem;
+}
+
+.cyber-strategist .secondary-button {
+    padding: 0.75rem 2rem;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+}
+
+.cyber-strategist .hero-button::before,
+.cyber-strategist .secondary-button::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple), var(--accent-cyan));
+    background-size: 400% 400%;
+    z-index: -1;
+    opacity: 0.7;
+    filter: blur(8px);
+    transition: opacity 0.3s ease-in-out;
+    animation: button-glow-animation 2s linear infinite alternate;
+}
+
+@keyframes button-glow-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+.cyber-strategist .hero-button:hover::before,
+.cyber-strategist .secondary-button:hover::before {
+    opacity: 1;
+}
+
+.cyber-strategist .hero-button.clicked,
+.cyber-strategist .secondary-button.clicked {
+    background-color: var(--accent-cyan);
+    color: var(--bg-color);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 25px var(--accent-cyan);
+}
+
+html.light .cyber-strategist .hero-button.clicked,
+html.light .cyber-strategist .secondary-button.clicked {
+    color: #ffffff;
+}
+
+.cyber-strategist .hero-button.clicked::before,
+.cyber-strategist .secondary-button.clicked::before {
+    animation: none;
+    background: transparent;
+    filter: none;
+    opacity: 0;
+}
+
+@keyframes pulsate-border-glow {
+
+    0%,
+    100% {
+        border-color: var(--accent-cyan);
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+    }
+
+    50% {
+        border-color: var(--accent-purple);
+        box-shadow: 0 0 15px rgba(160, 32, 240, 0.4);
+    }
+}
+
+.cyber-strategist .skill-card-animated {
+    position: relative;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    background-color: var(--skill-card-bg-color);
+    border: 2px solid;
+    z-index: 1;
+    text-align: left;
+    animation: pulsate-border-glow 4s ease-in-out infinite;
+    transition: transform 0.3s ease;
+}
+
+.cyber-strategist .skill-card-animated:hover {
+    transform: translateY(-5px);
+}
+
+.cyber-strategist .horizontal-light-line {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+    animation: horizontal-light 4s linear infinite;
+}
+
+.cyber-strategist .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.cyber-strategist .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Updated Project Card Styles */
+.cyber-strategist .project-card-wrapper {
+    position: relative;
+    border-radius: 0.75rem;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.cyber-strategist .project-card-wrapper:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+}
+
+.cyber-strategist .project-card-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(300px circle at var(--mouse-x) var(--mouse-y), rgba(0, 255, 255, 0.3), transparent 80%);
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.cyber-strategist .project-card-wrapper:hover::after {
+    opacity: 1;
+}
+
+.cyber-strategist .project-card-content {
+    background-color: var(--project-card-bg-color);
+    background-image:
+        linear-gradient(var(--card-grid-color) 1px, transparent 1px),
+        linear-gradient(to right, var(--card-grid-color) 1px, transparent 1px);
+    background-size: 20px 20px;
+    border-radius: 0.7rem;
+    padding: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+}
+
+html.light .cyber-strategist .project-card-content h3,
+html.light .cyber-strategist .project-card-content svg {
+    color: var(--text-color);
+}
+
+.cyber-strategist .project-tag {
+    display: inline-block;
+    background-color: transparent;
+    color: var(--accent-cyan);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    border: 1px solid rgba(0, 255, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+.cyber-strategist .group:hover .project-tag {
+    background-color: rgba(0, 255, 255, 0.1);
+    border-color: rgba(0, 255, 255, 0.8);
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+}
+
+html.light .cyber-strategist .group:hover .project-tag {
+    background-color: rgba(7, 138, 138, 0.1);
+    border-color: rgba(7, 138, 138, 0.8);
+    box-shadow: 0 0 5px rgba(7, 138, 138, 0.5);
+}

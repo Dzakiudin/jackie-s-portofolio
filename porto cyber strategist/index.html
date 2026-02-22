@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaki - cyber strategist</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Orbitron & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Orbitron:wght@400;700;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* Custom CSS for theme, animations, and effects */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --bg-color: #000000;
+            --text-color: #eaeaea;
+            --accent-cyan: #00ffff;
+            --accent-purple: #a020f0;
+            --grid-color: rgba(0, 255, 255, 0.05);
+            --skill-card-bg-color: #000000;
+            /* Pure black for skill cards */
+            --project-card-bg-color: #0A0F1A;
+            /* Original dark blue for project cards */
+            --card-text-color: #a0aec0;
+            /* text-gray-400 */
+            --card-grid-color: rgba(0, 255, 255, 0.04);
+            --hero-button-text-color: var(--accent-cyan);
+            /* Default for dark mode */
+        }
+
+        html.light {
+            --bg-color: #f0f2f5;
+            --text-color: #1a1a1a;
+            --accent-cyan: #078a8a;
+            --accent-purple: #7b1aa3;
+            --grid-color: rgba(0, 0, 0, 0.05);
+            --skill-card-bg-color: #ffffff;
+            --project-card-bg-color: #ffffff;
+            --card-text-color: #4a5568;
+            /* text-gray-600 */
+            --card-grid-color: rgba(0, 0, 0, 0.08);
+            /* Increased opacity from 0.04 */
+            --hero-button-text-color: #1a1a1a;
+            /* Black for light mode */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            background-image:
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(to right, var(--grid-color) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* --- Animations --- */
+        @keyframes glow {
+
+            0%,
+            100% {
+                text-shadow: 0 0 5px var(--accent-cyan), 0 0 10px var(--accent-cyan), 0 0 15px var(--accent-cyan);
+            }
+
+            50% {
+                text-shadow: 0 0 10px var(--accent-purple), 0 0 20px var(--accent-purple), 0 0 30px var(--accent-purple);
+            }
+        }
+
+        html.light .neon-text {
+            text-shadow: 0 0 8px var(--accent-cyan);
+            animation: none;
+            /* Disable blinking glow on light mode for readability */
+        }
+
+        html.light h2.neon-text span {
+            color: var(--text-color) !important;
+        }
+
+        @keyframes horizontal-light {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* --- Component Styles --- */
+        .neon-text {
+            animation: glow 4s ease-in-out infinite;
+        }
+
+        .navbar-scrolled {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        html.light .navbar-scrolled {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* --- New Hero Button Styles --- */
+        .hero-button {
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            background: transparent;
+            border: 2px solid var(--accent-cyan);
+            color: var(--hero-button-text-color);
+            /* USE THE NEW VARIABLE HERE */
+            padding: 1rem 2.5rem;
+            border-radius: 0.75rem;
+            /* 12px */
+            font-size: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
+        .hero-button::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple), var(--accent-cyan));
+            background-size: 400% 400%;
+            z-index: -1;
+            opacity: 0.7;
+            filter: blur(8px);
+            transition: opacity 0.3s ease-in-out;
+            animation: button-glow-animation 2s linear infinite alternate;
+        }
+
+        @keyframes button-glow-animation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .hero-button:hover::before {
+            opacity: 1;
+        }
+
+        .hero-button.clicked {
+            background-color: var(--accent-cyan);
+            color: var(--bg-color);
+            /* Text color changes to dark when clicked */
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 25px var(--accent-cyan);
+        }
+
+        html.light .hero-button.clicked {
+            color: #ffffff;
+        }
+
+        .hero-button.clicked::before {
+            animation: none;
+            /* Stop glow animation when clicked */
+            background: transparent;
+            /* Remove glow effect */
+            filter: none;
+            opacity: 0;
+        }
+
+        /* --- New Secondary Button Styles --- */
+        .secondary-button {
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            background: transparent;
+            border: 2px solid var(--accent-cyan);
+            color: var(--hero-button-text-color);
+            padding: 0.75rem 2rem;
+            /* UKURAN DIUBAH (lebih kecil dari hero-button) */
+            border-radius: 0.75rem;
+            /* 12px */
+            font-size: 1rem;
+            /* FONT DIUBAH (lebih kecil dari hero-button) */
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
+        .secondary-button::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple), var(--accent-cyan));
+            background-size: 400% 400%;
+            z-index: -1;
+            opacity: 0.7;
+            filter: blur(8px);
+            transition: opacity 0.3s ease-in-out;
+            animation: button-glow-animation 2s linear infinite alternate;
+        }
+
+        .secondary-button:hover::before {
+            opacity: 1;
+        }
+
+        .secondary-button.clicked {
+            background-color: var(--accent-cyan);
+            color: var(--bg-color);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 25px var(--accent-cyan);
+        }
+
+        html.light .secondary-button.clicked {
+            color: #ffffff;
+        }
+
+        .secondary-button.clicked::before {
+            animation: none;
+            background: transparent;
+            filter: none;
+            opacity: 0;
+        }
+
+        /* --- New Pulsating Skill Card Styles --- */
+        @keyframes pulsate-border-glow {
+
+            0%,
+            100% {
+                border-color: var(--accent-cyan);
+                box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+            }
+
+            50% {
+                border-color: var(--accent-purple);
+                box-shadow: 0 0 15px rgba(160, 32, 240, 0.4);
+            }
+        }
+
+        .skill-card-animated {
+            position: relative;
+            padding: 1.5rem;
+            /* 24px */
+            border-radius: 0.75rem;
+            /* 12px */
+            background-color: var(--skill-card-bg-color);
+            border: 2px solid;
+            z-index: 1;
+            text-align: left;
+            /* Align content to the left */
+            animation: pulsate-border-glow 4s ease-in-out infinite;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card-animated:hover {
+            transform: translateY(-5px);
+        }
+
+        .skill-card-animated p {
+            color: var(--card-text-color);
+        }
+
+
+        .horizontal-light-line {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            animation: horizontal-light 4s linear infinite;
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* --- Updated Project Card Styles --- */
+        .project-card-wrapper {
+            position: relative;
+            border-radius: 0.75rem;
+            /* 12px */
+            padding: 1px;
+            /* Controls border thickness */
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            transition: all 0.3s ease-in-out;
+            overflow: hidden;
+        }
+
+        .project-card-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+        }
+
+        /* Interactive glow that follows the mouse */
+        .project-card-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(300px circle at var(--mouse-x) var(--mouse-y),
+                    rgba(0, 255, 255, 0.3),
+                    transparent 80%);
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+            border-radius: inherit;
+        }
+
+        .project-card-wrapper:hover::after {
+            opacity: 1;
+        }
+
+        .project-card-content {
+            background-color: var(--project-card-bg-color);
+            /* The matrix/grid background */
+            background-image:
+                linear-gradient(var(--card-grid-color) 1px, transparent 1px),
+                linear-gradient(to right, var(--card-grid-color) 1px, transparent 1px);
+            background-size: 20px 20px;
+            border-radius: 0.7rem;
+            /* Slightly smaller than wrapper */
+            padding: 1.5rem;
+            /* 24px */
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Specific color fixes for light mode */
+        html.light .project-card-content h3,
+        html.light .project-card-content svg {
+            color: var(--text-color);
+        }
+
+        .project-card-content p {
+            color: var(--card-text-color);
+        }
+
+        .project-tag {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--accent-cyan);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            border: 1px solid rgba(0, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .group:hover .project-tag {
+            background-color: rgba(0, 255, 255, 0.1);
+            border-color: rgba(0, 255, 255, 0.8);
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        }
+
+        html.light .group:hover .project-tag {
+            background-color: rgba(7, 138, 138, 0.1);
+            border-color: rgba(7, 138, 138, 0.8);
+            box-shadow: 0 0 5px rgba(7, 138, 138, 0.5);
+        }
+    </style>
+</head>
+
+<body class="overflow-x-hidden">
+
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+
+    <!-- Header / Navbar -->
+    <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="https://j4k1.netlify.app/" class="text-3xl font-orbitron font-bold"
+                style="text-shadow: 0 0 5px var(--accent-cyan);">J</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="hover:text-[var(--accent-cyan)] transition-colors">Home</a>
+                <a href="#tentang" class="hover:text-[var(--accent-cyan)] transition-colors">Tentang</a>
+                <a href="#skill" class="hover:text-[var(--accent-cyan)] transition-colors">Skill</a>
+                <a href="#proyek" class="hover:text-[var(--accent-cyan)] transition-colors">Proyek</a>
+                <a href="#insight" class="hover:text-[var(--accent-cyan)] transition-colors">Insight</a>
+                <a href="#kontak" class="hover:text-[var(--accent-cyan)] transition-colors">Kontak</a>
+            </div>
+            <!-- Dark Mode Toggle --><button id="theme-toggle"
+                class="p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-[var(--accent-cyan)]">
+                <svg id="theme-toggle-dark-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 5.05A1 1 0 003.636 3.636l-.707.707a1 1 0 101.414 1.414l.707-.707zM3 11a1 1 0 100-2H2a1 1 0 100 2h1zM6.464 14.95l-.707.707a1 1 0 001.414 1.414l.707-.707a1 1 0 00-1.414-1.414z"
+                        fill-rule="evenodd" clip-rule="evenodd"></path>
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home"
+            class="h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden">
+            <h1 class="font-orbitron text-4xl md:text-6xl lg:text-7xl font-bold neon-text leading-tight">
+                Hi, I’m Jackie<br> building logic into reality.
+            </h1>
+            <p class="mt-6 text-lg md:text-xl max-w-2xl text-gray-300" style="color: var(--text-color);">
+                Teknologi, logika, dan strategi dalam satu pola pikir.
+            </p>
+            <!-- New Hero Button --><button id="explore-button" class="hero-button mt-12">
+                Explore My World
+            </button>
+            <div class="horizontal-light-line"></div>
+        </section>
+
+        <!-- Tentang Saya -->
+        <section id="tentang" class="container mx-auto py-20 px-6 reveal">
+            <h2 class="font-orbitron text-4xl font-bold text-center mb-12 neon-text">
+                About <span class="text-white opacity-90">Me</span>
+            </h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="max-w-lg">
+                    <p class="text-lg leading-relaxed" style="color: var(--text-color);">
+                        Saya memiliki ketertarikan yang kuat terhadap teknologi, sistem yang efisien, serta inovasi
+                        futuristik yang dapat mengubah cara manusia berpikir dan bekerja.
+
+                        Dengan pendekatan yang analitis dan strategis, saya berfokus pada pengembangan tools dan sistem
+                        yang mengoptimalkan proses, mengotomatisasi alur kerja, serta menciptakan nilai dari
+                        kompleksitas.
+
+                        Tujuan saya adalah menghadirkan solusi yang tidak hanya fungsional, tetapi juga berkelanjutan
+                        dan berdampak nyata.
+                    </p>
+                </div>
+                <div>
+                    <!-- Digital Brain/Neuron SVG --><svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur" />
+                                    <feMergeNode in="SourceGraphic" />
+                                </feMerge>
+                            </filter>
+                            <linearGradient id="brainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:var(--accent-cyan); stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:var(--accent-purple); stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path
+                            d="M100,10 C40,10 30,70 30,70 C30,70 20,110 100,110 C180,110 170,70 170,70 C170,70 160,10 100,10 Z"
+                            fill="none" stroke="url(#brainGradient)" stroke-width="2" filter="url(#glow)" />
+                        <circle cx="100" cy="60" r="3" fill="var(--accent-cyan)" />
+                        <circle cx="80" cy="40" r="2" fill="var(--accent-cyan)" />
+                        <circle cx="120" cy="40" r="2" fill="var(--accent-cyan)" />
+                        <circle cx="70" cy="80" r="2" fill="var(--accent-purple)" />
+                        <circle cx="130" cy="80" r="2" fill="var(--accent-purple)" />
+                        <path d="M100 60 Q 85 50 80 40" stroke="var(--accent-cyan)" stroke-width="0.5" fill="none"
+                            opacity="0.7" />
+                        <path d="M100 60 Q 115 50 120 40" stroke="var(--accent-cyan)" stroke-width="0.5" fill="none"
+                            opacity="0.7" />
+                        <path d="M100 60 Q 80 70 70 80" stroke="var(--accent-purple)" stroke-width="0.5" fill="none"
+                            opacity="0.7" />
+                        <path d="M100 60 Q 120 70 130 80" stroke="var(--accent-purple)" stroke-width="0.5" fill="none"
+                            opacity="0.7" />
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Keahlian -->
+        <section id="skill" class="container mx-auto py-20 px-6 reveal">
+            <h2 class="font-orbitron text-4xl font-bold text-center mb-12 neon-text">
+                Keahlian <span class="text-white opacity-90">Saya</span>
+            </h2>
+
+            <!-- Kategori skill dalam grid -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Kognitif -->
+                <div class="skill-card-animated">
+                    <h3 class="font-orbitron text-xl font-bold mb-3" style="color:var(--accent-cyan);">Skill Kognitif
+                    </h3>
+                    <ul class="text-sm leading-relaxed pl-4 list-disc">
+                        <li><strong>Critical Thinking</strong> — Menganalisis bukti & argumen sebelum percaya.</li>
+                        <li><strong>Problem Solving</strong> — Menemukan solusi sistematis untuk masalah kompleks.</li>
+                        <li><strong>Strategic Thinking</strong> — Keputusan jangka panjang dengan perhitungan matang.
+                        </li>
+                        <li><strong>Analytical Thinking</strong> — Mengurai pola dengan cara terstruktur.</li>
+                        <li><strong>Creativity & Innovation</strong> — Membuat atau mengembangkan ide unik.</li>
+                        <li><strong>Decision Making</strong> — Memilih opsi terbaik, termasuk di bawah tekanan.</li>
+                        <li><strong>Research & Reasoning</strong> — Mengumpulkan data valid dan menarik kesimpulan
+                            logis.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Komunikasi & Sosial -->
+                <div class="skill-card-animated">
+                    <h3 class="font-orbitron text-xl font-bold mb-3" style="color:var(--accent-purple);">Komunikasi &
+                        Sosial</h3>
+                    <ul class="text-sm leading-relaxed pl-4 list-disc">
+                        <li><strong>Persuasion & Negotiation</strong> — Membujuk tanpa paksaan, menghasilkan
+                            kesepakatan.</li>
+                        <li><strong>Storytelling</strong> — Menyampaikan informasi lewat narasi yang mengikat.</li>
+                        <li><strong>Active Listening</strong> — Mendengarkan untuk mengerti, bukan sekadar merespon.
+                        </li>
+                        <li><strong>Empathy & EQ</strong> — Memahami emosi orang dan merespons tepat.</li>
+                        <li><strong>Body Language Reading</strong> — Membaca gesture, ekspresi, nada untuk insight
+                            tersembunyi.
+                        </li>
+                        <li><strong>Social Calibration</strong> — Menyesuaikan perilaku sesuai konteks sosial.</li>
+                    </ul>
+                </div>
+
+                <!-- Teknis / Digital -->
+                <div class="skill-card-animated">
+                    <h3 class="font-orbitron text-xl font-bold mb-3" style="color:var(--accent-cyan);">Teknis / Digital
+                    </h3>
+                    <ul class="text-sm leading-relaxed pl-4 list-disc">
+                        <li><strong>Programming / Coding</strong> — Menulis logika & instruksi untuk komputer.</li>
+                        <li><strong>Data Analysis</strong> — Membaca data untuk insight & keputusan.</li>
+                        <li><strong>Video Editing & Animation</strong> — Menyusun video jadi cerita visual engaging.
+                        </li>
+                        <li><strong>UI/UX Design</strong> — Membuat antarmuka nyaman dan intuitif.</li>
+                        <li><strong>Web/App Development</strong> — Membangun situs atau aplikasi dari nol.</li>
+                        <li><strong>Blockchain & Crypto</strong> — Pemahaman aset digital, staking, trading, DeFi.</li>
+                        <li><strong>Automation / Scripting</strong> — Membuat alur kerja otomatis untuk efisiensi.</li>
+                    </ul>
+                </div>
+
+                <!-- Fisik / Motorik -->
+                <div class="skill-card-animated">
+                    <h3 class="font-orbitron text-xl font-bold mb-3" style="color:var(--accent-purple);">Fisik / Motorik
+                    </h3>
+                    <ul class="text-sm leading-relaxed pl-4 list-disc">
+                        <li><strong>Strength Training / Bodybuilding</strong> — Latihan kekuatan berbasis teknik.</li>
+                        <li><strong>Cooking / Crafting / Gardening</strong> — Keterampilan manual yang melatih
+                            ketelitian.
+                        </li>
+                        <li><strong>Fine Motor Skills</strong> — Ketelitian tangan (menulis, melukis, instrumen).</li>
+                    </ul>
+                </div>
+
+                <!-- Kreatif & Artistik -->
+                <div class="skill-card-animated">
+                    <h3 class="font-orbitron text-xl font-bold mb-3" style="color:var(--accent-cyan);">Kreatif &
+                        Artistik</h3>
+                    <ul class="text-sm leading-relaxed pl-4 list-disc">
+                        <li><strong>Design Thinking</strong> — Menggabungkan logika dan seni untuk solusi kreatif.</li>
+                    </ul>
+                </div>
+
+                <!-- Emosional & Spiritual -->
+                <div class="skill-card-animated">
+                    <h3 class="font-orbitron text-xl font-bold mb-3" style="color:var(--accent-purple);">Emosional &
+                        Spiritual</h3>
+                    <ul class="text-sm leading-relaxed pl-4 list-disc">
+                        <li><strong>Self-Awareness</strong> — Memahami kekuatan, kelemahan, motif diri.</li>
+                        <li><strong>Self-Discipline</strong> — Konsistensi melakukan hal benar walau sedang malas.</li>
+                        <li><strong>Stress Management</strong> — Mengelola emosi dan tekanan secara efektif.</li>
+                        <li><strong>Resilience</strong> — Bangkit kembali setelah kegagalan.</li>
+                        <li><strong>Philosophical Reasoning</strong> — Nalar tentang makna hidup, etika, kebenaran.</li>
+                    </ul>
+                </div>
+
+                <!-- Bisnis & Uang -->
+                <div class="skill-card-animated">
+                    <h3 class="font-orbitron text-xl font-bold mb-3" style="color:var(--accent-cyan);">Bisnis & Uang
+                    </h3>
+                    <ul class="text-sm leading-relaxed pl-4 list-disc">
+                        <li><strong>Investasi & Trading</strong> — Membuat uang bekerja untuk Anda.</li>
+                        <li><strong>Marketing & Branding</strong> — Membuat produk/ide dikenal & disukai.</li>
+                        <li><strong>Finance Management</strong> — Mengatur keuangan pribadi/organisasi bijak.</li>
+                        <li><strong>Entrepreneurship</strong> — Mengubah ide menjadi bisnis nyata.</li>
+                    </ul>
+                </div>
+
+                <!-- Meta (Skill Pengganda) -->
+                <div class="skill-card-animated">
+                    <h3 class="font-orbitron text-xl font-bold mb-3" style="color:var(--accent-purple);">Meta (Skill
+                        Pengganda)</h3>
+                    <ul class="text-sm leading-relaxed pl-4 list-disc">
+                        <li><strong>Learning How to Learn</strong> — Metode belajar efektif, bukan sekadar rajin.</li>
+                        <li><strong>Time Management</strong> — Mengatur waktu agar produktif tanpa burnout.</li>
+                        <li><strong>Habit Building</strong> — Membangun kebiasaan positif jangka panjang.</li>
+                        <li><strong>Systems Thinking</strong> — Melihat dunia sebagai sistem terhubung.</li>
+                        <li><strong>Pattern Recognition</strong> — Menemukan pola tersembunyi di data/kejadian.</li>
+                    </ul>
+                </div>
+
+                <!-- Langka & Tersembunyi -->
+                <div class="skill-card-animated">
+                    <h3 class="font-orbitron text-xl font-bold mb-3" style="color:var(--accent-cyan);">Langka &
+                        Tersembunyi</h3>
+                    <ul class="text-sm leading-relaxed pl-4 list-disc">
+                        <li><strong>Idea Synthesis</strong> — Menggabungkan hal tak terkait jadi ide brilian.</li>
+                        <li><strong>Subcommunication</strong> — Menyampaikan pesan lewat tone, gesture, vibe.</li>
+                        <li><strong>Teaching / Simplifying</strong> — Menyederhanakan hal rumit jadi mudah dimengerti.
+                        </li>
+                        <li><strong>Behavioral Insight</strong> — Membaca motivasi & pola pikir orang lain.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Proyek -->
+        <section id="proyek" class="container mx-auto py-20 px-6 reveal">
+            <h2 class="font-orbitron text-4xl font-bold text-center mb-12 neon-text">
+                Proyek Unggulan
+            </h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Project Card 1: GenLUA -->
+                <div class="group">
+                    <div class="project-card-wrapper h-full">
+                        <a href="https://github.com/Dzakiudin/YT-Dubber-Lite-sederhana" class="project-card-content">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3
+                                        class="font-orbitron text-2xl font-bold text-white group-hover:text-[var(--accent-cyan)] transition-colors">
+                                        YT Dubber</h3>
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="h-6 w-6 text-gray-400 group-hover:text-[var(--accent-cyan)] transition-colors"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                </div>
+                                <p class="mb-6 text-sm leading-relaxed">Ekstensi Chrome sederhana untuk memberikan
+                                    dubbing (sulih suara) secara real-time pada video YouTube dengan membaca dan
+                                    menerjemahkan subtitle yang tersedia. Proyek ini sepenuhnya gratis, open-source, dan
+                                    menggunakan API bawaan peramban.</p>
+                            </div>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="project-tag">Extension</span>
+                                <span class="project-tag">SpeechSynthesis</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 2: TMD Pro -->
+                <div class="group">
+                    <div class="project-card-wrapper h-full">
+                        <a href="https://github.com/Dzakiudin/Indikator-dan-strategi-TradingView"
+                            class="project-card-content">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3
+                                        class="font-orbitron text-2xl font-bold text-white group-hover:text-[var(--accent-cyan)] transition-colors">
+                                        Indikator TradingView</h3>
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="h-6 w-6 text-gray-400 group-hover:text-[var(--accent-cyan)] transition-colors"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                </div>
+                                <p class="mb-6 text-sm leading-relaxed">Indikator TradingView profesional untuk analisis
+                                    teknikal dengan sinyal akurat dan real-time.</p>
+                            </div>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="project-tag">Pine Script</span>
+                                <span class="project-tag">Trading</span>
+                                <span class="project-tag">TradingView</span>
+                                <span class="project-tag">Market Analysis</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 3: Deadzone Pro -->
+                <div class="group">
+                    <div class="project-card-wrapper h-full">
+                        <a href="https://github.com/Dzakiudin/GenLua-V2-Manifest-Lua-Generator-for-SteamTools-Injector"
+                            class="project-card-content">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3
+                                        class="font-orbitron text-2xl font-bold text-white group-hover:text-[var(--accent-cyan)] transition-colors">
+                                        Manifest & Lua Generator for SteamTools Injector</h3>
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="h-6 w-6 text-gray-400 group-hover:text-[var(--accent-cyan)] transition-colors"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                </div>
+                                <p class="mb-6 text-sm leading-relaxed">Alat sederhana dan efisien yang secara otomatis
+                                    menghasilkan file manifest.json dan skrip .lua yang diperlukan untuk digunakan
+                                    dengan SteamTools Injector. Ini membantu mempercepat proses injeksi untuk game dan
+                                    alat berbasis Steam yang menggunakan skrip Lua khusus.</p>
+                            </div>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="project-tag">Lua</span>
+                                <span class="project-tag">Manifest</span>
+                                <span class="project-tag">Auto Generator</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 4: Poke Master 3000 -->
+                <div class="group">
+                    <div class="project-card-wrapper h-full">
+                        <a href="https://github.com/Dzakiudin/Poke-Master-3000" class="project-card-content">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3
+                                        class="font-orbitron text-2xl font-bold text-white group-hover:text-[var(--accent-cyan)] transition-colors">
+                                        Auto Poke Facebook Extension</h3>
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="h-6 w-6 text-gray-400 group-hover:text-[var(--accent-cyan)] transition-colors"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                </div>
+                                <p class="mb-6 text-sm leading-relaxed">Ekstensi Chrome yang bikin lu bisa colek semua
+                                    teman di Facebook secara otomatis dalam sekali klik.</p>
+                            </div>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="project-tag">Auto click</span>
+                                <span class="project-tag">Extension</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 4: Poke Master 3000 -->
+                <div class="group">
+                    <div class="project-card-wrapper h-full">
+                        <a href="https://github.com/Dzakiudin/Clean-Page-Reader" class="project-card-content">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3
+                                        class="font-orbitron text-2xl font-bold text-white group-hover:text-[var(--accent-cyan)] transition-colors">
+                                        Clean Page Reader</h3>
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="h-6 w-6 text-gray-400 group-hover:text-[var(--accent-cyan)] transition-colors"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                </div>
+                                <p class="mb-6 text-sm leading-relaxed">Ubah halaman web yang berantakan menjadi artikel
+                                    yang bersih dan nyaman dibaca dengan satu klik. Ekstensi ini secara otomatis
+                                    menghapus iklan, sidebar, popup, komentar, dan elemen mengganggu lainnya, menyajikan
+                                    konten utama dalam mode baca yang fokus dan minimalis.</p>
+                            </div>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="project-tag">AdBlock</span>
+                                <span class="project-tag">Extension</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 4: Poke Master 3000 -->
+                <div class="group">
+                    <div class="project-card-wrapper h-full">
+                        <a href="https://github.com/Dzakiudin/Website-Time-Counter" class="project-card-content">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3
+                                        class="font-orbitron text-2xl font-bold text-white group-hover:text-[var(--accent-cyan)] transition-colors">
+                                        Website Time Counter</h3>
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="h-6 w-6 text-gray-400 group-hover:text-[var(--accent-cyan)] transition-colors"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                </div>
+                                <p class="mb-6 text-sm leading-relaxed">Website Time Counter adalah ekstensi Chrome
+                                    open-source sederhana yang membantu Anda melacak total waktu yang dihabiskan di
+                                    setiap situs web setiap hari. Ini adalah alat yang hebat untuk memahami dan
+                                    mengelola kebiasaan digital Anda.</p>
+                            </div>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="project-tag">tracker</span>
+                                <span class="project-tag">Extension</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="text-center mt-12">
+                <a href="https://github.com/Dzakiudin?tab=repositories" class="secondary-button">
+                    Lihat Selengkapnya
+                </a>
+            </div>
+        </section>
+
+        <!-- Insight Section -->
+        <section id="insight" class="container mx-auto py-20 px-6 reveal">
+            <h2 class="font-orbitron text-4xl font-bold text-center mb-12 neon-text">
+                Digital <span class="text-white opacity-90">Reflections</span>
+            </h2>
+            <div class="space-y-8 max-w-2xl mx-auto">
+                <div class="border-l-4 border-[var(--accent-cyan)] pl-6 py-2">
+                    <p class="text-xl italic">“Strategi terbaik lahir dari keheningan pikiran.”</p>
+                </div>
+                <div class="border-l-4 border-[var(--accent-purple)] pl-6 py-2">
+                    <p class="text-xl italic">“Teknologi tanpa arah adalah kekacauan yang cantik.”</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Kontak -->
+        <section id="kontak" class="container mx-auto py-20 px-6 text-center reveal">
+            <h2 class="font-orbitron text-3xl font-bold mb-4">Siap berkolaborasi untuk masa depan?</h2>
+            <p class="mb-8">Hubungi saya melalui platform berikut.</p>
+            <div class="flex justify-center space-x-6">
+                <!-- GitHub --><a href="https://github.com/Dzakiudin"
+                    class="text-gray-400 hover:text-[var(--accent-cyan)] transition-colors" aria-label="GitHub">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" role="img">
+                        <path
+                            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                    </svg>
+                </a>
+                <!-- LinkedIn --><a href="https://www.linkedin.com/in/ahmad-dzakiudin-30404b344/"
+                    class="text-gray-400 hover:text-[var(--accent-cyan)] transition-colors" aria-label="LinkedIn">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" role="img">
+                        <path
+                            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z" />
+                    </svg>
+                </a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=dzakiudin07@gmail.com&su=Kolaborasi%20Proyek"
+                    class="text-gray-400 hover:text-[var(--accent-cyan)] transition-colors" aria-label="Email">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" role="img">
+                        <path
+                            d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z" />
+                    </svg>
+                </a>
+                <!-- X (Twitter) --><a href="https://x.com/Dzakiudin07"
+                    class="text-gray-400 hover:text-[var(--accent-cyan)] transition-colors" aria-label="X">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" role="img">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t-2 border-[var(--accent-cyan)] mt-20">
+        <div class="container mx-auto py-8 px-6 text-center text-gray-400" style="color: var(--text-color);">
+            <p class="italic">“Simplicity is the ultimate sophistication.”</p>
+            <p class="text-sm mt-1">— Leonardo da Vinci</p>
+            <p class="text-xs mt-4">&copy; 2025 Jaki. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for interactivity -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Theme Toggler ---
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const darkIcon = document.getElementById('theme-toggle-dark-icon');
+            const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+            // Apply theme from localStorage on load
+            if (localStorage.getItem('theme') === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+                document.documentElement.classList.add('light');
+                lightIcon.classList.remove('hidden');
+                darkIcon.classList.add('hidden');
+            } else {
+                document.documentElement.classList.remove('light');
+                darkIcon.classList.remove('hidden');
+                lightIcon.classList.add('hidden');
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                document.documentElement.classList.toggle('light');
+                darkIcon.classList.toggle('hidden');
+                lightIcon.classList.toggle('hidden');
+
+                if (document.documentElement.classList.contains('light')) {
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    localStorage.setItem('theme', 'dark');
+                }
+                // Re-initialize particles with new colors
+                initParticles();
+            });
+
+            // --- Navbar Scroll Effect ---
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('navbar-scrolled');
+                } else {
+                    navbar.classList.remove('navbar-scrolled');
+                }
+            });
+
+            // --- Scroll Reveal Animation ---
+            const revealElements = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            revealElements.forEach(elem => {
+                observer.observe(elem);
+            });
+
+            // --- Interactive Project Card Glow ---
+            const cards = document.querySelectorAll('.project-card-wrapper');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                });
+            });
+
+            // --- Hero Button Click Effect ---
+            const exploreButton = document.getElementById('explore-button');
+            exploreButton.addEventListener('click', () => {
+                exploreButton.classList.add('clicked');
+                // Optional: remove 'clicked' class after a short delay
+                setTimeout(() => {
+                    exploreButton.classList.remove('clicked');
+                }, 1000); // 1 second delay
+                // You can also add scroll to a section here, e.g.:
+                document.getElementById('tentang').scrollIntoView({ behavior: 'smooth' });
+            });
+
+
+            // --- Particles.js Initialization ---
+            function initParticles() {
+                const isLightMode = document.documentElement.classList.contains('light');
+                const particleColor = isLightMode ? '#7b1aa3' : '#00ffff';
+                const lineColor = isLightMode ? '#078a8a' : '#a020f0';
+
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": {
+                            "value": 50,
+                            "density": { "enable": true, "value_area": 800 }
+                        },
+                        "color": { "value": particleColor },
+                        "shape": { "type": "circle" },
+                        "opacity": { "value": 0.5, "random": true },
+                        "size": { "value": 2, "random": true },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": lineColor,
+                            "opacity": 0.3,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 1,
+                            "direction": "none",
+                            "random": true,
+                            "straight": false,
+                            "out_mode": "out"
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": { "enable": true, "mode": "grab" },
+                            "onclick": { "enable": true, "mode": "push" },
+                            "resize": true
+                        },
+                        "modes": {
+                            "grab": { "distance": 140, "line_linked": { "opacity": 0.7 } },
+                            "push": { "particles_nb": 4 }
+                        }
+                    },
+                    "retina_detect": true
+                });
+            }
+
+            initParticles();
+        });
+    </script>
+</body>
+
+</html>

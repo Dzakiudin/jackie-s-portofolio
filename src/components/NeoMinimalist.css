@@ -88,6 +88,18 @@ body.light-mode .neo-minimalist .card-glow:hover {
     }
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Background grid Hero Section */
 .neo-minimalist #hero-section {
     background-image:
@@ -167,4 +179,39 @@ body.light-mode .neo-minimalist #hero-section {
 
 .neo-minimalist .project-link-icon:hover {
     color: var(--text-light);
+}
+
+/* ── Accessibility: Reduced Motion ─────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+
+    .neo-minimalist .fade-in-section,
+    .neo-minimalist .floating-shape,
+    .neo-minimalist .animated-visual-glow,
+    .neo-minimalist #hero-section,
+    .neo-minimalist .fade-in-section.is-visible .stagger-item {
+        animation: none !important;
+    }
+
+    .neo-minimalist .fade-in-section {
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .neo-minimalist .fade-in-section.is-visible .stagger-item {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .neo-minimalist .card-glow:hover {
+        transform: none;
+    }
+}
+
+/* ── Accessibility: Focus Visible ──────────────────────────────── */
+.neo-minimalist a:focus-visible,
+.neo-minimalist button:focus-visible {
+    outline: 2px solid var(--accent-green);
+    outline-offset: 2px;
+    border-radius: 4px;
 }

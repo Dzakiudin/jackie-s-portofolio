@@ -177,7 +177,7 @@ html.light .cyber-strategist .secondary-button.clicked {
 
 .cyber-strategist .skill-card-animated {
     position: relative;
-    padding: 1.5rem;
+    padding: 1rem;
     border-radius: 0.75rem;
     background-color: var(--skill-card-bg-color);
     border: 2px solid;
@@ -187,8 +187,26 @@ html.light .cyber-strategist .secondary-button.clicked {
     transition: transform 0.3s ease;
 }
 
+@media (min-width: 768px) {
+    .cyber-strategist .skill-card-animated {
+        padding: 1.5rem;
+    }
+}
+
 .cyber-strategist .skill-card-animated:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .cyber-strategist .horizontal-light-line {
@@ -286,4 +304,39 @@ html.light .cyber-strategist .group:hover .project-tag {
     background-color: rgba(7, 138, 138, 0.1);
     border-color: rgba(7, 138, 138, 0.8);
     box-shadow: 0 0 5px rgba(7, 138, 138, 0.5);
+}
+
+/* ── Accessibility: Reduced Motion ─────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+
+    .cyber-strategist .neon-text,
+    .cyber-strategist .skill-card-animated,
+    .cyber-strategist .horizontal-light-line,
+    .cyber-strategist .hero-button::before,
+    .cyber-strategist .secondary-button::before {
+        animation: none !important;
+    }
+
+    .cyber-strategist .reveal {
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .cyber-strategist .skill-card-animated {
+        border-color: var(--accent-cyan);
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+    }
+
+    .cyber-strategist .project-card-wrapper:hover {
+        transform: none;
+    }
+}
+
+/* ── Accessibility: Focus Visible ──────────────────────────────── */
+.cyber-strategist a:focus-visible,
+.cyber-strategist button:focus-visible {
+    outline: 2px solid var(--accent-cyan);
+    outline-offset: 2px;
+    border-radius: 4px;
 }
